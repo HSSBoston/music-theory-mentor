@@ -91,10 +91,13 @@ if timeSig == "4/4":
                 
             if cl == clef.TrebleClef():
                 s = converter.parse("tinyNotation: " + newNote.name.lower() + tempNoteString)
-                print(s.recurse().notes.first().pitch.midi)
-                print(s.flatten().notes[1].pitch.midi)
+                print(tempNoteString)
+                print(s.flatten().elements)
                 if abs(s.recurse().notes.first().pitch.midi - s.flatten().notes[1].pitch.midi) > 7:
-                    noteName = newNote.name.lower() + "'"
+                    if len(newNote.name) > 1:
+                        noteName = newNote.name[0].lower() + "'"
+                    else:
+                        noteName = newNote.name[0].lower() + "'" + newNote.name[1:]
                 else:
                     noteName = newNote.name.lower()
             else:
