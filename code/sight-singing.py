@@ -1,6 +1,5 @@
 from music21 import *
-import numpy as np
-import random
+import random, numpy as np
 
 RANDOM_SEED_NOTE = None #None or int
 rng = np.random.default_rng(seed=RANDOM_SEED_NOTE)
