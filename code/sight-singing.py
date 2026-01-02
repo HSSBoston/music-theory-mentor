@@ -10,7 +10,7 @@ P = np.array(
      [0.3, 0, 0.4, 0.3, 0, 0, 0, 0],
      [0.1, 0.4, 0, 0.4, 0.1, 0, 0, 0],
      [0, 0.1, 0.4, 0, 0.4, 0.1, 0, 0],
-     [0, 0, 0.2, 0.5, 0, 0.1, 0.1, 0.1],
+     [0, 0, 0.2, 0.6, 0, 0.1, 0.05, 0.05],
      [0, 0, 0, 0.3, 0.5, 0, 0.2, 0],
      [0, 0, 0, 0.1, 0.1, 0.3, 0, 0.5],
      [0, 0, 0, 0, 0, 0.5, 0.5, 0]
@@ -82,6 +82,7 @@ if timeSig == "4/4":
             newNote = note.Note(k.tonic)
             num = num[-1]
             newNoteSD = "1"
+            noteName = newNote.name.lower()
         else:
             newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(temp.name)])
             newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
@@ -89,25 +90,26 @@ if timeSig == "4/4":
             if newNote.name == k.getLeadingTone().name and keyLetter.islower():
                 newNote.pitch.accidental("flat")
                 
-        if cl == clef.TrebleClef():
-            s = converter.parse("tinyNotation: " + newNote.name.upper())
-            if s.recurse().notes.first() > note.Note("C4"):
-                noteName = newNote.name.lower() + "'"
+            if cl == clef.TrebleClef():
+                s = converter.parse("tinyNotation: " + newNote.name.lower() + tempNoteString)
+                print(s.recurse().notes.first().pitch.midi)
+                print(s.flatten().notes[1].pitch.midi)
+                if abs(s.recurse().notes.first().pitch.midi - s.flatten().notes[1].pitch.midi) > 5:
+                    noteName = newNote.name.lower() + "'"
+                else:
+                    noteName = newNote.name.lower()
             else:
-                noteName = newNote.name.lower()
-        else:
-            s = converter.parse("tinyNotation: " + newNote.name.upper())
-            s.measure(1).clef = cl
-            if s.recurse().notes.first() < note.Note("C2"):
-                noteName = newNote.name.upper() + newNote.name.upper()
-            elif s.recurse().notes.first() == "C":
-                noteName = newNote.name.lower()
-            else:
-                noteName = newNote.name.upper()
+                s = converter.parse("tinyNotation: " + newNote.name.upper() + tempNoteString)
+                
+                if abs(s.recurse().notes.first().pitch.midi - s.flatten().notes[1].pitch.midi) > 5:
+                    noteName = newNote.name.lower()
+                else:
+                    noteName = newNote.name.upper()
             
         noteString = " " + noteName + num + " "
         melodyString += noteString
         temp = newNote
+        tempNoteString = noteString
     
     
 print(melodyString)
