@@ -18,7 +18,7 @@ html_page = """
 st.markdown(html_page, unsafe_allow_html=True)
 
 st.success("Success!")
-st.info("Inofrmation")
+st.info("Information")
 st.warning("This is a warning!")
 st.error("This is an error!")
 
