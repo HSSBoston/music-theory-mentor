@@ -13,7 +13,7 @@ print("What is the name of the key signature with " + str(accidentals) + " " + s
 if sharpOrFlat == "sharps":
     ks = key.KeySignature(accidentals)
     key = ks.asKey()
-    option1ks = key. (accidentals-1)
+    option1ks = key.KeySignature(accidentals-1)
     option1 = option1ks.asKey()
     option2ks = key.KeySignature(accidentals+1)
     option2 = option2ks.asKey()
