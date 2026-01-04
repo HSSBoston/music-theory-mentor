@@ -22,8 +22,8 @@ st.info("Information")
 st.warning("This is a warning!")
 st.error("This is an error!")
 
-img = Image.open("photo.png")
-st.image(img, width=300, caption="Packt Logo")
+#img = Image.open("photo.png")
+#st.image(img, width=300, caption="Packt Logo")
 
 st.video("https://www.youtube.com/watch?v=xAWDqdpOlu8")
 
@@ -55,3 +55,21 @@ select_val = st.slider("Select a Value", 1, 10)
 
 if st.button("Balloons"):
     st.balloons()
+    
+if 'processed_input' not in st.session_state:
+    st.session_state['processed_input'] = ""
+
+def process_input():
+    # This function is called when the text input changes
+    st.session_state['processed_input'] = st.session_state['current_input']
+
+st.text_input(
+    "Enter something",
+    key="current_input",
+    on_change=process_input
+)
+st.button("Update Display") # This button forces a rerun after the callback
+
+# This logic only updates when the 'processed_input' state is changed via the callback
+if st.session_state['processed_input']:
+    st.write(f"Current processed input: {st.session_state['processed_input']}")
