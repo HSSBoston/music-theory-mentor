@@ -14,6 +14,5 @@ Although numerous resources exist for general music theory study, materials spec
 
 MT Mentor addresses this issue by producing an unlimited set of practice problems for core AP Music Theory topics, including key signature, parallel and relative keys, inversion types, sevenths, and sight singing. It is designed to support repetition-based and hands-on practice, which is essential for mastering theoretical concepts.
 
-<!--
-This work was presented at [AnimalHack 2025](https://animalhack2025.devpost.com/) and won 
--->
+This work was presented at [InnovArt 2026](https://innovart-hack.com/2026) and won Honorable Mention. 
+
