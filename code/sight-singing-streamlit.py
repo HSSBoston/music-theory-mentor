@@ -1,11 +1,11 @@
 from music21 import *
 import random, numpy as np
-from midi2audio import FluidSynth
+# from midi2audio import FluidSynth
 import os
 import streamlit as st
 from PIL import Image
 import subprocess
-from pydub import AudioSegment
+# from pydub import AudioSegment
 
 m21Settings = environment.UserSettings()
 m21Settings["musescoreDirectPNGPath"] = "/Applications/MuseScore 4.app/Contents/MacOS/mscore"
@@ -131,44 +131,15 @@ melody.insert(0.0, tempo.MetronomeMark(60))
 #melody.show()
 
 melody.write("musicxml.png", fp = "melody-image.png")
+midiFile= melody.write("midi", fp = "melody.mid")
+
+museScoreCmd = "/Applications/MuseScore 4.app/Contents/MacOS/mscore"
+cmd = [museScoreCmd, "melody.mid", "-o", "melody.mp3"]
+subprocess.run(cmd, check=True)
 
 st.title("Sight singing")
-
-
-midiFilePath = "melody.mid"
-midiFile= melody.write("midi", fp = midiFilePath)
-
-
-
-# filePath = melody.write("music21.audio.file", fp="melody.wav")
-# us = environment.UserSettings()
-# musescorePath = us['musicxmlPath']
-
-# musescore_exec = "mscore" 
-# input_file = midiPath
-# output_file = "melodyAudio.mp3"
-# 
-# command = [musescorePath, midiPath, "-o", output_file]
-# subprocess.run(command, check=True)
-
-img = Image.open("melody-image-1.png")
-st.image(img)
-
-# audioFile = open("melody.wav", "rb")
-# audioBytes = audioFile.read()
-# st.audio(audioBytes, format="audio/wav")
-
-
-
-def convert_wav_to_mp3_pydub(wav_path, mp3_path):
-    # FFmpeg or Libav must be installed and in your system's PATH
-    audio = AudioSegment.from_wav(wav_path)
-    audio.export(mp3_path, format="mp3")
-    print(f"Successfully converted '{wav_path}' to '{mp3_path}'")
-
-
-
-st.audio("melody-audio.mp3");
+st.image( Image.open("melody-image-1.png") )
+st.audio("melody.mp3");
 
 
 
