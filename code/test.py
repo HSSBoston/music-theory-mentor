@@ -1,4 +1,6 @@
 from music21 import *
 
-s = converter.parse("tinyNotation: d'-4")
-s.show()
+m = stream.Measure()
+m.append(note.Note("E"))
+
+m.show()

@@ -10,7 +10,6 @@ cadences = {
     "Phrygian Half Cadence" : ["iv6-V"]
     }
 
-
 cadence = random.choice(list(cadences.keys()))
 answer = random.choice(cadences[cadence])
 option1c = random.choice(list(cadences.keys()))
