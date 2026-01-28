@@ -71,8 +71,8 @@ measureFourSE = [" 0.5 0.5 0.5 T1.5 ",
 
 
 #up to three accidentals only (to keep problems not too hard)
-keysLettersList = ["C","G","D","A","F","B-","E-","a","e","b", "d", "g", "c"]
-keyLetter = random.choice(keysLettersList)
+keyLettersList = ["C","G","D","A","F","B-","E-","a","e","b", "d", "g", "c"]
+keyLetter = random.choice(keyLettersList)
 k = key.Key(keyLetter)
 
 if k.mode == "major":
