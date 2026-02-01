@@ -139,7 +139,4 @@ subprocess.run(cmd, check=True)
 
 st.title("Sight singing")
 st.image( Image.open("melody-image-1.png") )
-st.audio("melody.mp3");
-
-
-
+st.audio("melody.mp3")
