@@ -1,6 +1,9 @@
 from music21 import *
 
-m = stream.Measure()
-m.append(note.Note("E"))
+scalePitchNames = []
+sc = scale.MajorScale("C")
 
-m.show()
+for p in sc.getPitches():
+  scalePitchNames.append(p.name)
+  
+print(scalePitchNames.index("C"))
