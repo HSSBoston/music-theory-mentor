@@ -72,9 +72,8 @@ measureFourSE = [
     [1,   0.5, 1.5],
     [0.5, 1,   1.5]]
 
-
-#up to three accidentals only (to keep problems not too hard)
-keyLettersList = ["C","G","D","A","F","B-","E-","a","e","b", "d", "g", "c"]
+keyLettersList = ["C","G","D","A","F","B-","E-",
+                  "a","e","b", "d", "g", "c"]
 keyLetter = random.choice(keyLettersList)
 k = key.Key(keyLetter)
 
@@ -85,19 +84,18 @@ else:
 
 scalePitchNames = []
 
-randomInt = random.randint(0,1)
-if randomInt < 0.5:
+randomFloat = random.random()
+if randomFloat < 0.5:
     cl = clef.TrebleClef()
     for pitch in sc.getPitches(keyLetter+"4"):
         scalePitchNames.append(pitch.name)
-    
 else:
     cl = clef.BassClef()
     for pitch in sc.getPitches(keyLetter+"3"):
         scalePitchNames.append(pitch.name)
 
-randomInt = random.randint(0,1)
-if randomInt < 0.5:
+randomFloat = random.random()
+if randomFloat < 0.5:
     timeSig = "4/4"
 else:
     timeSig = "6/8"
@@ -113,7 +111,6 @@ m4 = stream.Measure()
 m4.rightBarLine = bar.Barline("final")
 
 if timeSig == "4/4":
-    #LIST OF STRINGS
     m1Rhythm = random.choice(measureOneFF)
     m2Rhythm = random.choice(measureTwoThreeFF)
     m3Rhythm = random.choice(measureTwoThreeFF)
@@ -124,14 +121,9 @@ else:
     m3Rhythm = random.choice(measureTwoThreeSE)
     m4Rhythm = random.choice(measureFourSE)
 
-print(m1Rhythm)
-print(m2Rhythm)
-print(m3Rhythm)
-print(m4Rhythm)
-
 prevNote = None
 
-#MEASURE ONE
+# MEASURE ONE
 for index, noteDuration in enumerate(m1Rhythm):
     if index == 0:
         newNote = note.Note(k.tonic)
@@ -141,9 +133,11 @@ for index, noteDuration in enumerate(m1Rhythm):
             newNote.octave = 4
         newNote.quarterLength = noteDuration
     else:
-        newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
+        newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
+                               p=P[scalePitchNames.index(prevNote.name)])
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
         print(scalePitchNames.index(prevNote.name))
+        
         if newNoteSD == "7" and keyLetter.isLower():
             newNote.pitch.accidental("sharp")
         
@@ -156,15 +150,15 @@ for index, noteDuration in enumerate(m1Rhythm):
         newNote.quarterLength = noteDuration
     
     m1.append(newNote)
-    
     prevNote = newNote
     
-#MEASURE TWO
+# MEASURE TWO
 for index, noteDuration in enumerate(m2Rhythm):
-    
-    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
+    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
+                           p=P[scalePitchNames.index(prevNote.name)])
     newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
     print(scalePitchNames.index(prevNote.name))
+    
     if newNoteSD == "7" and keyLetter.isLower():
         newNote.pitch.accidental("sharp")
     
@@ -175,17 +169,16 @@ for index, noteDuration in enumerate(m2Rhythm):
         newNote.octave += 1
     
     newNote.quarterLength = noteDuration
-    
     m2.append(newNote)
-    
     prevNote = newNote
     
-#MEASURE THREE
+# MEASURE THREE
 for index, noteDuration in enumerate(m3Rhythm):
-    
-    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
+    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
+                           p=P[scalePitchNames.index(prevNote.name)])
     newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
     print(scalePitchNames.index(prevNote.name))
+    
     if newNoteSD == "7" and keyLetter.isLower():
         newNote.pitch.accidental("sharp")
     
@@ -196,12 +189,10 @@ for index, noteDuration in enumerate(m3Rhythm):
         newNote.octave += 1
         
     newNote.quarterLength = noteDuration
-    
     m3.append(newNote)
-    
     prevNote = newNote
 
-#MEASURE FOUR
+# MEASURE FOUR
 for index, noteDuration in enumerate(m4Rhythm):
     if index == len(m4Rhythm) - 1:
         newNote = note.Note(k.tonic)
@@ -212,9 +203,11 @@ for index, noteDuration in enumerate(m4Rhythm):
             newNote.octave = 4
         newNote.quarterLength = noteDuration
     else:
-        newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
+        newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
+                               p=P[scalePitchNames.index(prevNote.name)])
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
         print(scalePitchNames.index(prevNote.name))
+        
         if newNoteSD == "7" and keyLetter.isLower():
             newNote.pitch.accidental("sharp")
                 
@@ -227,7 +220,6 @@ for index, noteDuration in enumerate(m4Rhythm):
         newNote.quarterLength = noteDuration
     
     m4.append(newNote)
-    
     prevNote = newNote
 
 melody.append(m1)
