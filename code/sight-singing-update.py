@@ -83,13 +83,18 @@ if k.mode == "major":
 else:
   sc = scale.MinorScale(keyLetter)
 
+scalePitchNames = []
 
 randomInt = random.randint(0,1)
 if randomInt < 0.5:
     cl = clef.TrebleClef()
+    for pitch in sc.getPitches(keyLetter+"4"):
+        scalePitchNames.append(pitch.name)
     
 else:
     cl = clef.BassClef()
+    for pitch in sc.getPitches(keyLetter+"3"):
+        scalePitchNames.append(pitch.name)
 
 randomInt = random.randint(0,1)
 if randomInt < 0.5:
@@ -139,6 +144,9 @@ for index, noteDuration in enumerate(m1Rhythm):
         newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
         print(scalePitchNames.index(prevNote.name))
+        if newNoteSD == "7" and keyLetter.isLower():
+            newNote.pitch.accidental("sharp")
+        
         newNote.octave = m1.notes.first().octave
         if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
             newNote.octave -= 1
@@ -157,8 +165,8 @@ for index, noteDuration in enumerate(m2Rhythm):
     newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
     newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
     print(scalePitchNames.index(prevNote.name))
-    if newNote.name == k.getLeadingTone().name and keyLetter.islower():
-            newNote.pitch.accidental("sharp")
+    if newNoteSD == "7" and keyLetter.isLower():
+        newNote.pitch.accidental("sharp")
     
     newNote.octave = m1.notes.first().octave
     if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
@@ -178,8 +186,8 @@ for index, noteDuration in enumerate(m3Rhythm):
     newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
     newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
     print(scalePitchNames.index(prevNote.name))
-    if newNote.name == k.getLeadingTone().name and keyLetter.islower():
-            newNote.pitch.accidental("sharp")
+    if newNoteSD == "7" and keyLetter.isLower():
+        newNote.pitch.accidental("sharp")
     
     newNote.octave = m1.notes.first().octave
     if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
@@ -207,8 +215,8 @@ for index, noteDuration in enumerate(m4Rhythm):
         newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
         print(scalePitchNames.index(prevNote.name))
-        if newNote.name == k.getLeadingTone().name and keyLetter.islower():
-                newNote.pitch.accidental("sharp")
+        if newNoteSD == "7" and keyLetter.isLower():
+            newNote.pitch.accidental("sharp")
                 
         newNote.octave = m1.notes.first().octave
         if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
