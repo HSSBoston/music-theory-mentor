@@ -134,6 +134,7 @@ def generateSightSingingScore():
         else:
             newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
                                    p=P[scalePitchNames.index(prevNote.name)])
+            print(prevNote, prevNote.name)
             newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
             print(scalePitchNames.index(prevNote.name))
             
@@ -226,3 +227,8 @@ def generateSightSingingScore():
     melody.append(m3)
     melody.append(m4)
     return melody
+
+if __name__ == "__main__":
+    score = generateSightSingingScore()
+    score.show("text")
+#     score.show()
