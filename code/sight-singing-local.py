@@ -20,6 +20,6 @@ score = generateSightSingingScore()
 score2imgMidi(score)
 score2mp3(score)
 
-st.title("Sight singing")
+st.title("Sight singing question")
 st.image( Image.open("melody-image-1.png") )
 st.audio("melody.mp3")
