@@ -95,12 +95,12 @@ scalePitchNames = [] # Pitch names with an octave number ("C4") in the selected 
 randomFloat = random.random()
 if randomFloat < 0.5:
     cl = clef.TrebleClef()
-    for pitch in sc.getPitches(keyLetter+"4"):
-        scalePitchNames.append(pitch.nameWithOctave)    
+    for p in sc.getPitches(keyLetter+"4"):
+        scalePitchNames.append(p.nameWithOctave)    
 else:
     cl = clef.BassClef()
-    for pitch in sc.getPitches(keyLetter+"3"):
-        scalePitchNames.append(pitch.nameWithOctave)
+    for p in sc.getPitches(keyLetter+"3"):
+        scalePitchNames.append(p.nameWithOctave)
 print("Clef:",    cl)
 print("Scale pitch names", scalePitchNames)
 
