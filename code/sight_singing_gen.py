@@ -77,40 +77,11 @@ measureFourSE = [
     [1,   0.5, 1.5],
     [0.5, 1,   1.5]]
 
-# Key selection
-keyLettersList = ["C","G","D","A","F","B-","E-",
-                  "a","e","b", "d", "g", "c"]
-keyLetter = random.choice(keyLettersList)
-k = key.Key(keyLetter)
-print("Key:", k)
+# Key choices
+# keyLettersList = ["C","G","D","A","F","B-","E-",
+#                   "a","e","b", "d", "g", "c"]
+keyLettersList = ["a","e","b", "d", "g", "c"]
 
-if k.mode == "major":
-  sc = scale.MajorScale(keyLetter)
-else:
-  sc = scale.HarmonicMinorScale(keyLetter)
-
-# Clef selection
-scalePitchNames = [] # Pitch names with an octave number ("C4") in the selected key
-
-randomFloat = random.random()
-if randomFloat < 0.5:
-    cl = clef.TrebleClef()
-    for p in sc.getPitches(keyLetter+"4"):
-        scalePitchNames.append(p.nameWithOctave)    
-else:
-    cl = clef.BassClef()
-    for p in sc.getPitches(keyLetter+"3"):
-        scalePitchNames.append(p.nameWithOctave)
-print("Clef:",    cl)
-print("Scale pitch names", scalePitchNames)
-
-# Time signature selection
-randomFloat = random.random()
-if randomFloat < 0.5:
-    timeSig = "4/4"
-else:
-    timeSig = "6/8"
-print("Time signature:", timeSig)
 
 # adjust the octave of a new note by prioritizing stepwise melodic motion
 def adjustOctave(newNote, prevNote):
@@ -125,15 +96,40 @@ def adjustOctave(newNote, prevNote):
     else:
         return False
 
-def harmonicMinor(newNote, newNoteSD, keyLetter):
-    if newNoteSD == "7" and keyLetter.islower():
-        newNote.pitch.accidental = pitch.Accidental("sharp")
-        print("Harmonic minor.", newNote.nameWithOctave, end="")
-        return True
-    else:
-        return False
-
 def generateSightSingingScore():
+    # Key selection
+    keyLetter = random.choice(keyLettersList)
+    k = key.Key(keyLetter)
+    print("Key:", k)
+
+    if k.mode == "major":
+      sc = scale.MajorScale(keyLetter)
+    else:
+      sc = scale.HarmonicMinorScale(keyLetter)
+
+    # Clef selection
+    scalePitchNames = [] # Pitch names with an octave number ("C4") in the selected key
+
+    randomFloat = random.random()
+    if randomFloat < 0.5:
+        cl = clef.TrebleClef()
+        for p in sc.getPitches(keyLetter+"4"):
+            scalePitchNames.append(p.nameWithOctave)    
+    else:
+        cl = clef.BassClef()
+        for p in sc.getPitches(keyLetter+"3"):
+            scalePitchNames.append(p.nameWithOctave)
+    print("Clef:",    cl)
+    print("Scale pitch names", scalePitchNames)
+
+    # Time signature selection
+    randomFloat = random.random()
+    if randomFloat < 0.5:
+        timeSig = "4/4"
+    else:
+        timeSig = "6/8"
+    print("Time signature:", timeSig)
+
     # Score initialization
     melody = stream.Part()
     m1 = stream.Measure()
@@ -180,8 +176,6 @@ def generateSightSingingScore():
 
             if adjustOctave(newNote, prevNote):
                 print(" Measure 1, Note index", index)
-            if harmonicMinor(newNote, newNoteSD, keyLetter):
-                print(" Measure 1, Note index", index)
         prevNote = newNote
         m1.append(newNote)
 
@@ -192,9 +186,8 @@ def generateSightSingingScore():
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
         newNote.quarterLength = noteDuration
         newNote.octave = m1.notes.first().octave
+        
         if adjustOctave(newNote, prevNote):
-            print(" Measure 2, Note index", index)
-        if harmonicMinor(newNote, newNoteSD, keyLetter):
             print(" Measure 2, Note index", index)
         prevNote = newNote
         m2.append(newNote)
@@ -206,9 +199,8 @@ def generateSightSingingScore():
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
         newNote.quarterLength = noteDuration
         newNote.octave = m1.notes.first().octave
+        
         if adjustOctave(newNote, prevNote):
-            print(" Measure 3, Note index", index)
-        if harmonicMinor(newNote, newNoteSD, keyLetter):
             print(" Measure 3, Note index", index)
         prevNote = newNote
         m3.append(newNote)
@@ -228,9 +220,8 @@ def generateSightSingingScore():
             newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
             newNote.quarterLength = noteDuration
             newNote.octave = m1.notes.first().octave
+            
             if adjustOctave(newNote, prevNote):
-                print(" Measure 4, Note index", index)
-            if harmonicMinor(newNote, newNoteSD, keyLetter):
                 print(" Measure 4, Note index", index)
         prevNote = newNote
         m4.append(newNote)
@@ -244,4 +235,4 @@ def generateSightSingingScore():
 if __name__ == "__main__":
     score = generateSightSingingScore()
     score.show("text")
-    score.show()
+#     score.show()
