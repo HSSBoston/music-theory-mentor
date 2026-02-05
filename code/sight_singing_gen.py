@@ -78,10 +78,8 @@ measureFourSE = [
     [0.5, 1,   1.5]]
 
 # Key choices
-# keyLettersList = ["C","G","D","A","F","B-","E-",
-#                   "a","e","b", "d", "g", "c"]
-keyLettersList = ["a","e","b", "d", "g", "c"]
-
+keyLettersList = ["C","G","D","A","F","B-","E-",
+                  "a","e","b", "d", "g", "c"]
 
 # adjust the octave of a new note by prioritizing stepwise melodic motion
 def adjustOctave(newNote, prevNote):
