@@ -114,7 +114,7 @@ def generateSightSingingScore():
     if randomFloat < 0.5:
         cl = clef.TrebleClef()
         for p in sc.getPitches(keyLetter+"4"):
-            scalePitchNames.append(p.nameWithOctave)    
+            scalePitchNames.append(p.nameWithOctave)
     else:
         cl = clef.BassClef()
         for p in sc.getPitches(keyLetter+"3"):
