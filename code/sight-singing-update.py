@@ -112,6 +112,28 @@ else:
     timeSig = "6/8"
 print("Time signature:", timeSig)
 
+# adjust the octave of a new note by prioritizing stepwise melodic motion
+def adjustOctave(newNote, prevNote):
+    if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
+        newNote.octave -= 1
+        print("Octave adjustment. SD", newNote.octave+1, "-> SD", newNote.octave, end="")
+        return True
+    elif (prevNote.pitch.midi - newNote.pitch.midi) >= 7:
+        newNote.octave += 1
+        print("Octave adjustment. SD", newNote.octave-1, "-> SD", newNote.octave, end="")
+        return True
+    else:
+        return False
+
+def harmonicMinor(newNote, newNoteSD, keyLetter):
+    if newNoteSD == "7" and keyLetter.islower():
+#         newNote.pitch.accidental("sharp")
+        newNote.pitch.accidental = pitch.Accidental("sharp")
+        print("Harmonic minor.", newNote.nameWithOctave, end="")
+        return True
+    else:
+        return False
+
 # Score initialization
 melody = stream.Part()
 m1 = stream.Measure()
@@ -137,28 +159,6 @@ print("Rhythm pattern for measure 1:", m1Rhythm)
 print("Rhythm pattern for measure 2:", m2Rhythm)
 print("Rhythm pattern for measure 3:", m3Rhythm)
 print("Rhythm pattern for measure 4:", m4Rhythm)
-
-# adjust the octave of a new note by prioritizing stepwise melodic motion
-def adjustOctave(newNote, prevNote):
-    if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
-        newNote.octave -= 1
-        print("Octave adjustment. SD", newNote.octave+1, "-> SD", newNote.octave, end="")
-        return True
-    elif (prevNote.pitch.midi - newNote.pitch.midi) >= 7:
-        newNote.octave += 1
-        print("Octave adjustment. SD", newNote.octave-1, "-> SD", newNote.octave, end="")
-        return True
-    else:
-        return False
-
-def harmonicMinor(newNote, newNoteSD, keyLetter):
-    if newNoteSD == "7" and keyLetter.islower():
-#         newNote.pitch.accidental("sharp")
-        newNote.pitch.accidental = pitch.Accidental("sharp")
-        print("Harmonic minor.", newNote.nameWithOctave, end="")
-        return True
-    else:
-        return False
 
 prevNote = None
 
