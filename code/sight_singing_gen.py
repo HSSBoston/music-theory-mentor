@@ -158,6 +158,7 @@ def generateSightSingingScore():
 
     prevNote = None
 
+    # Melody generation
     # Measure 1
     for index, noteDuration in enumerate(m1Rhythm):
         if index == 0:
