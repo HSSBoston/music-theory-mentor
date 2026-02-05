@@ -5,14 +5,14 @@ RANDOM_SEED_NOTE = None #None or int
 rng = np.random.default_rng(seed=RANDOM_SEED_NOTE)
 
 P = np.array([
-    [0,   0.4,  0.4, 0.1,  0.1, 0,    0,    0],
+    [0,   0.4,  0.4, 0.2,  0, 0,    0,    0],
     [0.3, 0,    0.4, 0.3,  0,   0,    0,    0],
     [0.1, 0.4,  0,   0.4,  0.1, 0,    0,    0],
     [0,   0.15, 0.4, 0,    0.4, 0.05, 0,    0],
     [0,   0,    0.2, 0.65, 0,   0.1,  0.05, 0],
     [0,   0,    0,   0.3,  0.5, 0,    0.2,  0],
     [0,   0,    0,   0.1,  0.1, 0.3,  0,    0.5],
-    [0,   0,    0,   0,    0,   0.5,  0.5,  0]])
+    [0,   0,    0,   0,    0.6,   0,  0.4,  0]])
 
 #SIMPLE 4/4
 measureOneFF = [
@@ -81,7 +81,7 @@ k = key.Key(keyLetter)
 if k.mode == "major":
   sc = scale.MajorScale(keyLetter)
 else:
-  sc = scale.MinorScale(keyLetter)
+  sc = scale.HarmonicMinorScale(keyLetter)
 
 scalePitchNames = []
 
@@ -89,12 +89,12 @@ randomInt = random.randint(0,1)
 if randomInt < 0.5:
     cl = clef.TrebleClef()
     for pitch in sc.getPitches(keyLetter+"4"):
-        scalePitchNames.append(pitch.name)
+        scalePitchNames.append(pitch.nameWithOctave)
     
 else:
     cl = clef.BassClef()
     for pitch in sc.getPitches(keyLetter+"3"):
-        scalePitchNames.append(pitch.name)
+        scalePitchNames.append(pitch.nameWithOctave)
 
 randomInt = random.randint(0,1)
 if randomInt < 0.5:
@@ -135,17 +135,16 @@ prevNote = None
 for index, noteDuration in enumerate(m1Rhythm):
     if index == 0:
         newNote = note.Note(k.tonic)
+        newNoteSD = "1"
         if cl == clef.BassClef():
             newNote.octave = 3
         else:
             newNote.octave = 4
         newNote.quarterLength = noteDuration
     else:
-        newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
+        print(prevNote.nameWithOctave)
+        newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.nameWithOctave)])
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
-        print(scalePitchNames.index(prevNote.name))
-        if newNoteSD == "7" and keyLetter.isLower():
-            newNote.pitch.accidental("sharp")
         
         newNote.octave = m1.notes.first().octave
         if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
@@ -154,40 +153,51 @@ for index, noteDuration in enumerate(m1Rhythm):
             newNote.octave += 1
             
         newNote.quarterLength = noteDuration
+
+    prevNote = newNote
     
     m1.append(newNote)
     
-    prevNote = newNote
+    
     
 #MEASURE TWO
 for index, noteDuration in enumerate(m2Rhythm):
-    
-    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
+    print(prevNote.nameWithOctave)
+    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.nameWithOctave)])
     newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
-    print(scalePitchNames.index(prevNote.name))
-    if newNoteSD == "7" and keyLetter.isLower():
-        newNote.pitch.accidental("sharp")
+    
     
     newNote.octave = m1.notes.first().octave
+#     if (newNote.pitch.midi - prevNote.pitch.midi) > 7:
+#         testNewNote = newNote
+#         testNewNote.octave -= 1
+#         if (testNewNote.pitch.midi - prevNote.pitch.midi) > (newNote.pitch.midi - prevNote.pitch.midi):
+#             pass
+#         else:
+#             newNote.octave -= 1
+#     if (prevNote.pitch.midi - newNote.pitch.midi) > 7:
+#         testNewNote = newNote
+#         testNewNote.octave += 1
+#         if (prevNote.pitch.midi - testNewNote.pitch.midi) > (prevNote.pitch.midi - newNote.pitch.midi):
+#             pass
+#         else:
+#             newNote.octave += 1
     if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
         newNote.octave -= 1
-    if (prevNote.pitch.midi - newNote.pitch.midi) >= 7:
+    if (prevNote.pitch.midi - newNote.pitch.midi) >=7:
         newNote.octave += 1
     
     newNote.quarterLength = noteDuration
+
+    prevNote = newNote
     
     m2.append(newNote)
     
-    prevNote = newNote
-    
 #MEASURE THREE
 for index, noteDuration in enumerate(m3Rhythm):
-    
-    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
+    print(prevNote.nameWithOctave)
+    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.nameWithOctave)])
     newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
-    print(scalePitchNames.index(prevNote.name))
-    if newNoteSD == "7" and keyLetter.isLower():
-        newNote.pitch.accidental("sharp")
     
     newNote.octave = m1.notes.first().octave
     if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
@@ -196,10 +206,10 @@ for index, noteDuration in enumerate(m3Rhythm):
         newNote.octave += 1
         
     newNote.quarterLength = noteDuration
-    
-    m3.append(newNote)
-    
+
     prevNote = newNote
+        
+    m3.append(newNote)
 
 #MEASURE FOUR
 for index, noteDuration in enumerate(m4Rhythm):
@@ -212,11 +222,9 @@ for index, noteDuration in enumerate(m4Rhythm):
             newNote.octave = 4
         newNote.quarterLength = noteDuration
     else:
-        newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.name)])
+        print(prevNote.nameWithOctave)
+        newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"], p=P[scalePitchNames.index(prevNote.nameWithOctave)])
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
-        print(scalePitchNames.index(prevNote.name))
-        if newNoteSD == "7" and keyLetter.isLower():
-            newNote.pitch.accidental("sharp")
                 
         newNote.octave = m1.notes.first().octave
         if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
@@ -225,10 +233,10 @@ for index, noteDuration in enumerate(m4Rhythm):
             newNote.octave += 1
             
         newNote.quarterLength = noteDuration
+
+    prevNote = newNote
     
     m4.append(newNote)
-    
-    prevNote = newNote
 
 melody.append(m1)
 melody.append(m2)
