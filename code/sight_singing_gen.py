@@ -127,7 +127,6 @@ def adjustOctave(newNote, prevNote):
 
 def harmonicMinor(newNote, newNoteSD, keyLetter):
     if newNoteSD == "7" and keyLetter.islower():
-#         newNote.pitch.accidental("sharp")
         newNote.pitch.accidental = pitch.Accidental("sharp")
         print("Harmonic minor.", newNote.nameWithOctave, end="")
         return True
