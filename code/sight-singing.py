@@ -5,13 +5,13 @@ import os, subprocess, shutil
 from sight_singing_gen import *
 
 def findMuseScoreCmd():
-    for cmd in ("musescore", "mscore", "musescore3"):
+    for cmd in ("musescore", "musescore3", "mscore"):
         if shutil.which(cmd):
             return cmd
     raise RuntimeError("MuseScore executable not found on PATH.")
 
 MUSESCORE_CMD = findMuseScoreCmd()
-# st.write(MUSESCORE_PATH)
+# st.write(MUSESCORE_CMD)
 
 if not shutil.which("xvfb-run"):
     raise RuntimeError("xvfb-run not found on PATH.")
