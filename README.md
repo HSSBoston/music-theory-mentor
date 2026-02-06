@@ -14,7 +14,10 @@ Although numerous resources exist for general music theory study, materials spec
 
 MT Mentor addresses this issue by algorithmically generating unlimited practice problems with immediate feedback. Currently, it targets a few types of problems that many students consistently struggle with. By supporting repeated, hands-on practice, which is essential for mastering theoretical concepts, MT Mentor has the potential to lower barriers to success and improve learning outcomes for students preparing for the AP Music Theory exam.
 
+This work was presented at [InnovArt 2026](https://innovart-hack.com/2026) and received [Honorable Mention](https://devpost.com/software/the-music-theory-mentor). 
+
 The sight-singing question generator of MT Mentor is available online at [https://mt-mentor.streamlit.app/](https://mt-mentor.streamlit.app/).
 
-This work was presented at [InnovArt 2026](https://innovart-hack.com/2026) and received [Honorable Mention](https://devpost.com/software/the-music-theory-mentor). 
+### Publications
+
 
