@@ -18,8 +18,8 @@ def score2mp3():
         check=True)
 
 score = generateSightSingingScore()
-score2imgMidi(score)
-score2mp3(score)
+score2imgMidi()
+score2mp3()
 
 st.title("Section 2B: Sight-singing")
 st.image(Image.open("melody-image-1.png"))
