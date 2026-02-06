@@ -8,7 +8,7 @@ MUSESCORE_PATH = "/Applications/MuseScore 4.app/Contents/MacOS/mscore"
 m21Settings = environment.UserSettings()
 m21Settings["musescoreDirectPNGPath"] = MUSESCORE_PATH
 
-def score2imgMidi():
+def score2imgMidi(score):
     score.write("musicxml.png", fp = "melody-image.png")
     score.write("midi",         fp = "melody.mid")
 
@@ -18,7 +18,7 @@ def score2mp3():
         check=True)
 
 score = generateSightSingingScore()
-score2imgMidi()
+score2imgMidi(score)
 score2mp3()
 
 st.title("Section 2B: Sight-singing")
