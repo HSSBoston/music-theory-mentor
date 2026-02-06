@@ -20,6 +20,6 @@ The sight-singing question generator of MT Mentor is available online at [https:
 
 ## Publications
 
-- Hanna Suzuki, "The Music Theory Mentor," In Where Art and Technology Resonate: Creative Stories from InnovArt 2026, Binnovative Innovation Book Series, ISBN: 9798-2433-7429-3, April 2026. to appear.
+- Hanna Suzuki, "The Music Theory Mentor," In *Where Art and Technology Resonate: Creative Stories from InnovArt 2026*, Binnovative Innovation Book Series, ISBN: 9798-2433-7429-3, April 2026. to appear.
 
 
