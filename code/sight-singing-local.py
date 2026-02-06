@@ -5,21 +5,22 @@ import subprocess, streamlit as st
 
 MUSESCORE_PATH = "/Applications/MuseScore 4.app/Contents/MacOS/mscore"
 
-def score2imgMidi(score):
-    m21Settings = environment.UserSettings()
-    m21Settings["musescoreDirectPNGPath"] = MUSESCORE_PATH
+m21Settings = environment.UserSettings()
+m21Settings["musescoreDirectPNGPath"] = MUSESCORE_PATH
 
+def score2imgMidi():
     score.write("musicxml.png", fp = "melody-image.png")
     score.write("midi",         fp = "melody.mid")
 
-def score2mp3(score):    
-    cmd = [MUSESCORE_PATH, "melody.mid", "-o", "melody.mp3"]
-    subprocess.run(cmd, check=True)
+def score2mp3():    
+    subprocess.run(
+        [MUSESCORE_PATH, "melody.mid", "-o", "melody.mp3"],
+        check=True)
 
 score = generateSightSingingScore()
 score2imgMidi(score)
 score2mp3(score)
 
 st.title("Section 2B: Sight-singing")
-st.image( Image.open("melody-image-1.png") )
+st.image(Image.open("melody-image-1.png"))
 st.audio("melody.mp3")
