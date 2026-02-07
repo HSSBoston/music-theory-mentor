@@ -14,11 +14,11 @@ Although numerous resources exist for general music theory study, materials spec
 
 MT Mentor addresses this issue by algorithmically generating unlimited practice problems with immediate feedback. Currently, it targets a few types of problems that many students consistently struggle with. By supporting repeated, hands-on practice, which is essential for mastering theoretical concepts, MT Mentor has the potential to lower barriers to success and improve learning outcomes for students.
 
-The initial work of this project was presented at the [InnovArt 2026](https://innovart-hack.com/2026) hackathon and received an [Honorable Mention](https://devpost.com/software/the-music-theory-mentor) award. 
+The initial work of this project was presented at the [InnovArt 2026](https://innovart-hack.com/2026) hackathon and received the [Honorable Mention](https://devpost.com/software/the-music-theory-mentor) award. 
 
 The sight-singing question generator of MT Mentor is available online at [https://mt-mentor.streamlit.app/](https://mt-mentor.streamlit.app/).
 
 ## Publications
 
-- Hanna Suzuki, "The Music Theory Mentor," In *Where Art and Technology Resonate: Creative Stories from InnovArt 2026*, Binnovative Innovation Book Series, ISBN: 9798-2433-7429-3, April 2026. [preprint](https://github.com/HSSBoston/music-theory-mentor/blob/main/doc/mt-mentor-book-chapter.pdf)
+- Hanna Suzuki, "The Music Theory Mentor," In *Where Art and Technology Resonate: Creative Stories from InnovArt 2026*, Binnovative Innovation Book Series, ISBN: 9798-2433-7429-3, April 2026. to appear. [preprint](https://github.com/HSSBoston/music-theory-mentor/blob/main/doc/mt-mentor-book-chapter.pdf)
 
