@@ -94,14 +94,26 @@ keyLettersList = ["C","G","D","F","B-","E-",
 def adjustOctave(newNote, prevNote):
     if (newNote.pitch.midi - prevNote.pitch.midi) >= 7:
         newNote.octave -= 1
-        print("Octave adjustment. SD", newNote.octave+1, "-> SD", newNote.octave, end="")
+        print("Octave adjustment:", newNote.octave+1, "->", newNote.octave, end="")
         return True
     elif (prevNote.pitch.midi - newNote.pitch.midi) >= 7:
         newNote.octave += 1
-        print("Octave adjustment. SD", newNote.octave-1, "-> SD", newNote.octave, end="")
+        print("Octave adjustment:", newNote.octave-1, "->", newNote.octave, end="")
         return True
     else:
         return False
+
+def weightedTransition(probDist, weightVector):
+    weightedProbDist = probDist * weightVector # element-wise multiplication
+    total = np.sum(weightedProbDist, dtype=float)
+    return weightedProbDist / total
+
+def closestLowerValue(prevNoteSD, newNoteSDList):
+    closestLowerVal = [v for v in newNoteSDList if v < prevNoteSD]
+    if closestLowerVal == None:
+        return None
+    else:
+        return max(lower)
 
 def generateSightSingingScore():
     # Key selection
@@ -216,7 +228,7 @@ def generateSightSingingScore():
 
     # Measure 4
     for index, noteDuration in enumerate(m4Rhythm):
-        if index == len(m4Rhythm) - 1:
+        if index == len(m4Rhythm) - 1: # if the last note
             newNote = note.Note(k.tonic)
             if cl == clef.BassClef():
                 newNote.octave = 3
@@ -224,8 +236,21 @@ def generateSightSingingScore():
                 newNote.octave = 4
             newNote.quarterLength = noteDuration
         else:
-            newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
-                                   p=P[scalePitchNames.index(prevNote.nameWithOctave)])
+            if index == len(m4Rhythm) - 2: # if the second note from the last
+                prevNoteSD = scalePitchNames.index(prevNote.nameWithOctave) + 1
+                if   prevNoteSD == "3": newNoteSD = "2"
+                elif prevNoteSD == "5": newNoteSD = "7"
+                elif prevNoteSD == "2": newNoteSD = "7"
+                else:
+#                     closestLowerValue(int(prevNoteSD), [7, 5, 2])
+                    p = P[scalePitchNames.index(prevNote.nameWithOctave)]
+                    p = weightedTransition(p, [0, 3, 2, 0, 3, 2, 3, 0])
+                    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
+                                           p=P[scalePitchNames.index(prevNote.nameWithOctave)])
+            else:
+                newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
+                                       p=P[scalePitchNames.index(prevNote.nameWithOctave)])
+                
             newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
             newNote.quarterLength = noteDuration
             newNote.octave = m1.notes.first().octave
@@ -248,4 +273,4 @@ def generateSightSingingScore():
 if __name__ == "__main__":
     score = generateSightSingingScore()
     score.show("text")
-    score.show()
+#     score.show()
