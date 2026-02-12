@@ -250,7 +250,8 @@ def generateSightSingingScore():
             else:
                 newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
                                        p=P[scalePitchNames.index(prevNote.nameWithOctave)])
-                
+            
+            print("Measure 4, Note index", index, newNoteSD)
             newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
             newNote.quarterLength = noteDuration
             newNote.octave = m1.notes.first().octave
