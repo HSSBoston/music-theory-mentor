@@ -108,12 +108,12 @@ def weightedTransition(probDist, weightVector):
     total = np.sum(weightedProbDist, dtype=float)
     return weightedProbDist / total
 
-def closestLowerValue(prevNoteSD, newNoteSDList):
-    closestLowerVal = [v for v in newNoteSDList if v < prevNoteSD]
-    if closestLowerVal == None:
-        return None
-    else:
-        return max(lower)
+# def closestLowerValue(prevNoteSD, newNoteSDList):
+#     closestLowerVal = [v for v in newNoteSDList if v < prevNoteSD]
+#     if closestLowerVal == None:
+#         return None
+#     else:
+#         return max(lower)
 
 def generateSightSingingScore():
     # Key selection
