@@ -236,22 +236,28 @@ def generateSightSingingScore():
                 newNote.octave = 4
             newNote.quarterLength = noteDuration
         else:
-            if index == len(m4Rhythm) - 2: # if the second note from the last
+            if index == len(m4Rhythm) - 2: # if the third note from the last
                 prevNoteSD = scalePitchNames.index(prevNote.nameWithOctave) + 1
-                if   prevNoteSD == "3": newNoteSD = "2"
-                elif prevNoteSD == "5": newNoteSD = "7"
-                elif prevNoteSD == "2": newNoteSD = "7"
+#                 if prevNoteSD == 3:
+#                     newNoteSD = "2"
+#                     print("!!!", prevNoteSD, newNoteSD)
+                if prevNoteSD == 5:
+                    newNoteSD = "7"
+                    print("!!!", prevNoteSD, newNoteSD)
+#                 elif prevNoteSD == 2:
+#                     newNoteSD = "7"
+                    print("!!!", prevNoteSD, newNoteSD)
                 else:
 #                     closestLowerValue(int(prevNoteSD), [7, 5, 2])
                     p = P[scalePitchNames.index(prevNote.nameWithOctave)]
-                    p = weightedTransition(p, [0, 3, 2, 0, 3, 2, 3, 0])
+                    p = weightedTransition(p, [0, 3, 1, 0, 3, 1, 3, 0])
                     newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
                                            p=P[scalePitchNames.index(prevNote.nameWithOctave)])
             else:
                 newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
                                        p=P[scalePitchNames.index(prevNote.nameWithOctave)])
             
-            print("Measure 4, Note index", index, newNoteSD)
+            print("Measure 4, Note index", index, ", SD", newNoteSD)
             newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
             newNote.quarterLength = noteDuration
             newNote.octave = m1.notes.first().octave
@@ -273,5 +279,5 @@ def generateSightSingingScore():
 
 if __name__ == "__main__":
     score = generateSightSingingScore()
-    score.show("text")
+#     score.show("text")
 #     score.show()
