@@ -274,11 +274,8 @@ def generateSightSingingScore():
                 if prevNoteSD == 4:
                     newNoteSD = random.choice([5,2])
                     print("!!!", prevNoteSD, newNoteSD)                    
-                elif prevNoteSD == 6:
-                    newNoteSD = "5"
-                    print("!!!", prevNoteSD, newNoteSD)
-#                 elif prevNoteSD == 5:
-#                     newNoteSD = "2"
+#                 elif prevNoteSD == 6:
+#                     newNoteSD = "5"
 #                     print("!!!", prevNoteSD, newNoteSD)
                 else:
                     newNoteSD = cadentialPrepTransition(prevNote, scalePitchNames)
