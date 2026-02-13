@@ -227,29 +227,48 @@ def generateSightSingingScore():
         prevNote = newNote
         m1.append(newNote)
 
-    # Measure 2
+    # MEASURE 2
+    #
+    # If the last note in the measure has a long duration (>0.5),
+    # end a half cadence with the note.
     if m2Rhythm[-1] > 0.5:
-        halfCadentialNoteIndex = len(m2Rhythm) - 1
+        halfCadentialPointIndex = len(m2Rhythm) - 1
+    # If the last note in the measure has a short duration (=0.5) and
+    # the second note from the end of the measure has a long duration (>0.5),
+    # end a half cadence with the second note from the end.
     elif m2Rhythm[-2] > 0.5:
-        halfCadentialNoteIndex = len(m2Rhythm) - 2
+        halfCadentialPointIndex = len(m2Rhythm) - 2
         
     for index, noteDuration in enumerate(m2Rhythm):
-        # If the last note in the measure is long (>0.5)
-        # end the measure with a half cadence
-        if index == len(m2Rhythm) - 1 and m2Rhythm[-1] != 0.5:
-        
-        
-        newNoteSD = transition(prevNote, scalePitchNames)
+        # If in the cadence-ending point
+        if index == halfCadentialPointIndex:
+            if note2NoteSD(prevNote, scalePitchNames) == 2:
+                newNoteSD = 5
+            elif note2NoteSD(prevNote, scalePitchNames) == 5:
+                newNoteSD = 2
+            else: 
+                newNoteSD = random.choice([2, 5])        
+        # If the note after the cadence-ending point
+        elif index == halfCadentialPointIndex + 1:
+            if note2NoteSD(prevNote, scalePitchNames) == 5:
+                newNoteSD = random.choice([5, 6, 7, 8])
+            elif note2NoteSD(prevNote,scalePitchNames) == 2:
+                newNoteSD = random.choice([3, 4])
+        else:
+            newNoteSD = transition(prevNote, scalePitchNames)
+            
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
         newNote.quarterLength = noteDuration
         newNote.octave = m1.notes.first().octave
         
         if adjustOctave(newNote, prevNote):
             print(" Measure 2, Note index", index)
+        
+        print("Measure 2, Note index", index, ", SD", newNoteSD)
         prevNote = newNote
         m2.append(newNote)
         
-    # Measure 3
+    # MEASURE 3
     for index, noteDuration in enumerate(m3Rhythm):
         newNoteSD = transition(prevNote, scalePitchNames)
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
