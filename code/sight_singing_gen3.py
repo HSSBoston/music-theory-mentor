@@ -16,12 +16,12 @@ rng = np.random.default_rng(seed=RANDOM_SEED_NOTE)
 #     [0,   0,    0,   0,    0.6, 0,    0.4,  0]])
 P = np.array([
     [0,   0.4,  0.4, 0.2,  0,   0,    0,    0],
-    [0.3, 0,    0.4, 0.3,  0,   0,    0,    0],
+    [0.3, 0,    0.4, 0.25, 0.05,0,    0,    0],
     [0.1, 0.4,  0,   0.4,  0.1, 0,    0,    0],
     [0,   0.15, 0.4, 0,    0.4, 0.05, 0,    0],
-    [0.05,0,    0.2, 0.3,  0,   0.3,  0.15, 0],
+    [0,   0.05, 0.2, 0.3,  0,   0.3,  0.15, 0],
     [0,   0,    0,   0.3,  0.5, 0,    0.2,  0],
-    [0.05,0,    0,   0,    0.15,0.4,  0,    0.4],
+    [0,   0,    0,   0.1,  0.1, 0.4,  0,    0.4],
     [0,   0,    0,   0,    0.6, 0,    0.4,  0]])
 
 # Rhythm patterns for the 1st measure in 4/4 (FF) time
@@ -129,6 +129,15 @@ def weightedTransition(probDist, weightVector):
     weightedProbDist = probDist * weightVector # element-wise multiplication
     total = np.sum(weightedProbDist, dtype=float)
     return weightedProbDist / total
+
+def cadentialPrepTransition(prevNote, scalePitchNames):
+    weightedP = weightedTransition(
+        P[scalePitchNames.index(prevNote.nameWithOctave)],
+        [0, 3, 0, 0, 3, 0, 0, 0])
+    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
+                           p=weightedP)
+    return newNoteSD
+
 
 # def closestLowerValue(prevNoteSD, newNoteSDList):
 #     closestLowerVal = [v for v in newNoteSDList if v < prevNoteSD]
@@ -259,24 +268,20 @@ def generateSightSingingScore():
                 newNote.octave = 4
             newNote.quarterLength = noteDuration
         else:
-            # if the third note from the end of the measure
+            # if the second note from the end of the measure
             if index == len(m4Rhythm) - 2: 
                 prevNoteSD = scalePitchNames.index(prevNote.nameWithOctave) + 1
                 if prevNoteSD == 4:
-                    randomFloat = random.random()
-                    if randomFloat < 0.5:
-                        newNoteSD = "5"
-                    else:
-                        newNoteSD = "2"
+                    newNoteSD = random.choice([5,2])
                     print("!!!", prevNoteSD, newNoteSD)                    
                 elif prevNoteSD == 6:
                     newNoteSD = "5"
                     print("!!!", prevNoteSD, newNoteSD)
+#                 elif prevNoteSD == 5:
+#                     newNoteSD = "2"
+#                     print("!!!", prevNoteSD, newNoteSD)
                 else:
-                    p = P[scalePitchNames.index(prevNote.nameWithOctave)]
-                    p = weightedTransition(p, [0, 3, 1, 0, 3, 1, 3, 0])
-                    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
-                                           p=P[scalePitchNames.index(prevNote.nameWithOctave)])
+                    newNoteSD = cadentialPrepTransition(prevNote, scalePitchNames)
             else:
                 newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
                                        p=P[scalePitchNames.index(prevNote.nameWithOctave)])
