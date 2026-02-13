@@ -125,6 +125,14 @@ def adjustOctave(newNote, prevNote):
     else:
         return False
 
+def note2NoteSD(note, scalePitchNames) -> int:
+    return scalePitchNames.index(note.nameWithOctave) + 1
+
+def transition(prevNote, scalePitchNames):
+    newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
+                           p=P[scalePitchNames.index(prevNote.nameWithOctave)])
+    return newNoteSD
+
 def weightedTransition(probDist, weightVector):
     weightedProbDist = probDist * weightVector # element-wise multiplication
     total = np.sum(weightedProbDist, dtype=float)
@@ -269,19 +277,15 @@ def generateSightSingingScore():
             newNote.quarterLength = noteDuration
         else:
             # if the second note from the end of the measure
-            if index == len(m4Rhythm) - 2: 
-                prevNoteSD = scalePitchNames.index(prevNote.nameWithOctave) + 1
+            if index == len(m4Rhythm) - 2:
+                prevNoteSD = note2NoteSD(prevNote, scalePitchNames)
                 if prevNoteSD == 4:
                     newNoteSD = random.choice([5,2])
                     print("!!!", prevNoteSD, newNoteSD)                    
-#                 elif prevNoteSD == 6:
-#                     newNoteSD = "5"
-#                     print("!!!", prevNoteSD, newNoteSD)
                 else:
                     newNoteSD = cadentialPrepTransition(prevNote, scalePitchNames)
             else:
-                newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
-                                       p=P[scalePitchNames.index(prevNote.nameWithOctave)])
+                newNoteSD = transition(prevNote, scalePitchNames)
             
             print("Measure 4, Note index", index, ", SD", newNoteSD)
             newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
