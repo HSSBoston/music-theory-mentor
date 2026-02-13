@@ -281,6 +281,9 @@ def generateSightSingingScore():
         print("Measure 2, Note index", index, ", SD", newNoteSD)
         prevNote = newNote
         m2.append(newNote)
+    
+    sl1 = spanner.Slur([m1.notes[0], m2.notes[halfCadentialPointIndex]])
+    m2.insert(0, sl1)
         
     # MEASURE 3
     for index, noteDuration in enumerate(m3Rhythm):
@@ -339,7 +342,15 @@ def generateSightSingingScore():
                 print(" Measure 4, Note index", index)
         prevNote = newNote
         m4.append(newNote)
-
+        
+    if halfCadentialPointIndex == len(m2Rhythm)-1:
+        sl2 = spanner.Slur([m3.notes[0],m4.notes[-1]])
+    else:
+        sl2 = spanner.Slur([m2.notes[halfCadentialPointIndex+1], m4.notes[-1]])
+    
+    m4.insert(sl2)
+    
+    
     melody.append(m1)
     melody.append(m2)
     melody.append(m3)
