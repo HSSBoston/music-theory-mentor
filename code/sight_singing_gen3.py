@@ -249,20 +249,24 @@ def generateSightSingingScore():
         halfCadentialPointIndex = len(m2Rhythm) - 2
         
     for index, noteDuration in enumerate(m2Rhythm):
+        prevNoteSD = note2NoteSD(prevNote, scalePitchNames)
         # If in the cadence-ending point
         if index == halfCadentialPointIndex:
-            if note2NoteSD(prevNote, scalePitchNames) == 2:
+            if prevNoteSD == 2:
                 newNoteSD = 5
-            elif note2NoteSD(prevNote, scalePitchNames) == 5:
+            elif prevNoteSD == 5:
                 newNoteSD = 2
             else:
-                
+                if abs(prevNoteSD - 5) <= abs(prevNoteSD - 2):
+                    newNoteSD = 5
+                else:
+                    newNoteSD = 2                
 #                 newNoteSD = random.choice([2, 5])        
         # If the note after the cadence-ending point
         elif index == halfCadentialPointIndex + 1:
-            if note2NoteSD(prevNote, scalePitchNames) == 5:
+            if prevNoteSD == 5:
                 newNoteSD = random.choice([5, 6, 7, 8])
-            elif note2NoteSD(prevNote,scalePitchNames) == 2:
+            elif prevNoteSD == 2:
                 newNoteSD = random.choice([3, 4])
         else:
             newNoteSD = transition(prevNote, scalePitchNames)
