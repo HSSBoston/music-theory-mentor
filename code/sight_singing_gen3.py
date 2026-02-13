@@ -125,12 +125,12 @@ def adjustOctave(newNote, prevNote):
     else:
         return False
 
-def note2NoteSD(note, scalePitchNames) -> int:
-    return scalePitchNames.index(note.nameWithOctave) + 1
+def note2NoteSD(noteObj, scalePitchNames) -> int:
+    return scalePitchNames.index(noteObj.nameWithOctave) + 1
 
-def transition(prevNote, scalePitchNames) -> int:
+def transition(prevNoteObj, scalePitchNames) -> int:
     newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
-                           p=P[scalePitchNames.index(prevNote.nameWithOctave)])
+                           p=P[scalePitchNames.index(prevNoteObj.nameWithOctave)])
     return newNoteSD
 
 def getWeightedProbDist(probDist, weightVector):
@@ -138,21 +138,14 @@ def getWeightedProbDist(probDist, weightVector):
     total = np.sum(weightedProbDist, dtype=float)
     return weightedProbDist / total
 
-def cadentialPrepTransition(prevNote, scalePitchNames) -> int:
+def cadentialPrepTransition(prevNoteObj, scalePitchNames) -> int:
     weightedP = getWeightedProbDist(
-        P[scalePitchNames.index(prevNote.nameWithOctave)],
+        P[scalePitchNames.index(prevNoteObj.nameWithOctave)],
         [0, 3, 0, 0, 3, 0, 0, 0])
     newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
                            p=weightedP)
     return newNoteSD
 
-
-# def closestLowerValue(prevNoteSD, newNoteSDList):
-#     closestLowerVal = [v for v in newNoteSDList if v < prevNoteSD]
-#     if closestLowerVal == None:
-#         return None
-#     else:
-#         return max(lower)
 
 def generateSightSingingScore():
     # Key selection
