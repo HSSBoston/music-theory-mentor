@@ -34,7 +34,20 @@ measureOneFF = [
     [1, 0.5, 0.5, 0.5, 0.5, 1]]
 
 # Rhythm patterns for the 2nd and 3rd measures when in 4/4 (FF) time
-measureTwoThreeFF = [
+
+measureTwoFF = [
+    [0.5, 0.5, 1,   1.5, 0.5],
+    [1.5, 0.5, 2],
+    [1,   1,   1.5, 0.5],
+    [1,   1.5, 0.5, 1],
+    [1,   0.5, 0.5, 0.5, 0.5, 1],
+    [0.5, 0.5, 0.5, 0.5, 1,   1]],
+    [0.5, 0.5, 0.5, 0.5, 1.5, 0.5],
+    [0.5, 0.5, 1,   1.5, 0.5],
+    [1,   0.5, 0.5, 1.5, 0.5],
+    [0.5, 0.5, 1,   1,   1]
+
+measureThreeFF = [
     [0.5, 0.5, 1,   1.5, 0.5],
     [1.5, 0.5, 2],
     [1.5, 0.5, 1,   0.5, 0.5],
@@ -65,7 +78,16 @@ measureOneSE = [
     [1,   0.5, 0.5, 1]]
 
 # Rhythm patterns for the 2nd and 3rd measures when in 6/8 (SE) time
-measureTwoThreeSE = [
+
+measureTwoSE = [
+    [0.75, 0.25, 0.5,  1,    0.5],
+    [0.75, 0.25, 0.5,  1.5],
+    [0.75, 0.25, 0.5,  0.5,  1],
+    [0.5,  0.5,  0.5,  1,    0.5],
+    [0.5,  0.5,  0.5,  0.5,  1],
+    [0.5, 0.5, 0.5,  1.5]]
+
+measureThreeSE = [
     [0.75, 0.25, 0.5,  0.5,  0.5,  0.5],
     [0.75, 0.25, 0.5,  1,    0.5],
     [0.75, 0.25, 0.5,  0.5,  1],
@@ -163,13 +185,13 @@ def generateSightSingingScore():
 
     if timeSig == "4/4":
         m1Rhythm = random.choice(measureOneFF)
-        m2Rhythm = random.choice(measureTwoThreeFF)
-        m3Rhythm = random.choice(measureTwoThreeFF)
+        m2Rhythm = random.choice(measureTwoFF)
+        m3Rhythm = random.choice(measureThreeFF)
         m4Rhythm = random.choice(measureFourFF)
     else:
         m1Rhythm = random.choice(measureOneSE)
-        m2Rhythm = random.choice(measureTwoThreeSE)
-        m3Rhythm = random.choice(measureTwoThreeSE)
+        m2Rhythm = random.choice(measureTwoSE)
+        m3Rhythm = random.choice(measureThreeSE)
         m4Rhythm = random.choice(measureFourSE)
     print("Rhythm pattern for measure 1:", m1Rhythm)
     print("Rhythm pattern for measure 2:", m2Rhythm)
