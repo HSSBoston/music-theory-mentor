@@ -228,7 +228,17 @@ def generateSightSingingScore():
         m1.append(newNote)
 
     # Measure 2
+    if m2Rhythm[-1] > 0.5:
+        halfCadentialNoteIndex = len(m2Rhythm) - 1
+    elif m2Rhythm[-2] > 0.5:
+        halfCadentialNoteIndex = len(m2Rhythm) - 2
+        
     for index, noteDuration in enumerate(m2Rhythm):
+        # If the last note in the measure is long (>0.5)
+        # end the measure with a half cadence
+        if index == len(m2Rhythm) - 1 and m2Rhythm[-1] != 0.5:
+        
+        
         newNoteSD = transition(prevNote, scalePitchNames)
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
         newNote.quarterLength = noteDuration
