@@ -238,17 +238,17 @@ def generateSightSingingScore():
         else:
             if index == len(m4Rhythm) - 2: # if the third note from the last
                 prevNoteSD = scalePitchNames.index(prevNote.nameWithOctave) + 1
-#                 if prevNoteSD == 3:
-#                     newNoteSD = "2"
-#                     print("!!!", prevNoteSD, newNoteSD)
-                if prevNoteSD == 5:
-                    newNoteSD = "7"
-                    print("!!!", prevNoteSD, newNoteSD)
-#                 elif prevNoteSD == 2:
-#                     newNoteSD = "7"
+                if prevNoteSD == 4:
+                    randomFloat = random.random()
+                    if randomFloat < 0.5:
+                        newNoteSD = "5"
+                    else:
+                        newNoteSD = "2"
+                    print("!!!", prevNoteSD, newNoteSD)                    
+                elif prevNoteSD == 6:
+                    newNoteSD = "5"
                     print("!!!", prevNoteSD, newNoteSD)
                 else:
-#                     closestLowerValue(int(prevNoteSD), [7, 5, 2])
                     p = P[scalePitchNames.index(prevNote.nameWithOctave)]
                     p = weightedTransition(p, [0, 3, 1, 0, 3, 1, 3, 0])
                     newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
