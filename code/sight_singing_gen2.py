@@ -228,7 +228,8 @@ def generateSightSingingScore():
 
     # Measure 4
     for index, noteDuration in enumerate(m4Rhythm):
-        if index == len(m4Rhythm) - 1: # if the last note
+        # if the last note in the measure
+        if index == len(m4Rhythm) - 1: 
             newNote = note.Note(k.tonic)
             if cl == clef.BassClef():
                 newNote.octave = 3
@@ -236,7 +237,8 @@ def generateSightSingingScore():
                 newNote.octave = 4
             newNote.quarterLength = noteDuration
         else:
-            if index == len(m4Rhythm) - 2: # if the third note from the last
+            # if the third note from the end of the measure
+            if index == len(m4Rhythm) - 2: 
                 prevNoteSD = scalePitchNames.index(prevNote.nameWithOctave) + 1
                 if prevNoteSD == 4:
                     randomFloat = random.random()
