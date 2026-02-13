@@ -168,9 +168,13 @@ def generateSightSingingScore():
             scalePitchNames.append(p.nameWithOctave)
     else:
         cl = clef.BassClef()
-        for p in sc.getPitches(keyLetter+"3"):
-            scalePitchNames.append(p.nameWithOctave)
-    print("Clef:",    cl)
+        if keyLetter in ["G", "F", "B-", "a", "b", "g"]:
+            for p in sc.getPitches(keyLetter+"2"):
+                scalePitchNames.append(p.nameWithOctave)
+        else:
+            for p in sc.getPitches(keyLetter+"3"):
+                scalePitchNames.append(p.nameWithOctave)            
+    print("Clef:", cl)
     print("Scale pitch names", scalePitchNames)
 
     # Time signature selection
@@ -211,10 +215,14 @@ def generateSightSingingScore():
     # Measure 1
     for index, noteDuration in enumerate(m1Rhythm):
         if index == 0:
-            newNote = note.Note(k.tonic)
+            newNote = note.Note(scalePitchNames[0])
             newNote.quarterLength = noteDuration
             if cl == clef.BassClef():
-                newNote.octave = 3
+                if scalePitchNames[0][-1] == "2":
+#                 if keyLetter in ["G", "F", "B-", "a", "b", "g"]:
+                    newNote.octave = 2
+                else:
+                    newNote.octave = 3
             else:
                 newNote.octave = 4
         else:
@@ -247,8 +255,9 @@ def generateSightSingingScore():
                 newNoteSD = 5
             elif note2NoteSD(prevNote, scalePitchNames) == 5:
                 newNoteSD = 2
-            else: 
-                newNoteSD = random.choice([2, 5])        
+            else:
+                
+#                 newNoteSD = random.choice([2, 5])        
         # If the note after the cadence-ending point
         elif index == halfCadentialPointIndex + 1:
             if note2NoteSD(prevNote, scalePitchNames) == 5:
@@ -295,9 +304,13 @@ def generateSightSingingScore():
     for index, noteDuration in enumerate(m4Rhythm):
         # if the last note in the measure
         if index == len(m4Rhythm) - 1: 
-            newNote = note.Note(k.tonic)
+            newNote = note.Note(scalePitchNames[0])
             if cl == clef.BassClef():
-                newNote.octave = 3
+                if scalePitchNames[0][-1] == "2":
+#                 if keyLetter in ["G", "F", "B-", "a", "b", "g"]:
+                    newNote.octave = 2
+                else:
+                    newNote.octave = 3
             else:
                 newNote.octave = 4
             newNote.quarterLength = noteDuration
