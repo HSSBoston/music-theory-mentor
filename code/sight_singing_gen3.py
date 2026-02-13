@@ -270,7 +270,13 @@ def generateSightSingingScore():
         
     # MEASURE 3
     for index, noteDuration in enumerate(m3Rhythm):
-        newNoteSD = transition(prevNote, scalePitchNames)
+        if index == 0 and note2NoteSD(m2.notes.last(), scalePitchNames) == 5:
+                newNoteSD = random.choice([5, 6, 7, 8])
+        elif index == 0 and note2NoteSD(m2.notes.last(), scalePitchNames) == 2:
+                newNoteSD = random.choice([3, 4])
+        else:
+            newNoteSD = transition(prevNote, scalePitchNames)
+
         newNote = note.Note(scalePitchNames[int(newNoteSD)-1])
         newNote.quarterLength = noteDuration
         newNote.octave = m1.notes.first().octave
