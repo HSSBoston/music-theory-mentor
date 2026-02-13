@@ -21,8 +21,8 @@ P = np.array([
     [0,   0.15, 0.4, 0,    0.4, 0.05, 0,    0],
     [0,   0.05, 0.2, 0.3,  0,   0.3,  0.15, 0],
     [0,   0,    0,   0.3,  0.5, 0,    0.2,  0],
-    [0,   0,    0,   0.1,  0.1, 0.4,  0,    0.4],
-    [0,   0,    0,   0,    0.6, 0,    0.4,  0]])
+    [0,   0,    0,   0,    0.1, 0.4,  0,    0.5],
+    [0,   0,    0,   0,    0.4, 0.3,  0.3,  0]])
 
 # Rhythm patterns for the 1st measure in 4/4 (FF) time
 measureOneFF = [
@@ -335,4 +335,4 @@ def generateSightSingingScore():
 if __name__ == "__main__":
     score = generateSightSingingScore()
 #     score.show("text")
-#     score.show()
+    score.show()
