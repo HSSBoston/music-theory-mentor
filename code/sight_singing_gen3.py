@@ -128,18 +128,18 @@ def adjustOctave(newNote, prevNote):
 def note2NoteSD(note, scalePitchNames) -> int:
     return scalePitchNames.index(note.nameWithOctave) + 1
 
-def transition(prevNote, scalePitchNames):
+def transition(prevNote, scalePitchNames) -> int:
     newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
                            p=P[scalePitchNames.index(prevNote.nameWithOctave)])
     return newNoteSD
 
-def weightedTransition(probDist, weightVector):
+def getWeightedProbDist(probDist, weightVector):
     weightedProbDist = probDist * weightVector # element-wise multiplication
     total = np.sum(weightedProbDist, dtype=float)
     return weightedProbDist / total
 
-def cadentialPrepTransition(prevNote, scalePitchNames):
-    weightedP = weightedTransition(
+def cadentialPrepTransition(prevNote, scalePitchNames) -> int:
+    weightedP = getWeightedProbDist(
         P[scalePitchNames.index(prevNote.nameWithOctave)],
         [0, 3, 0, 0, 3, 0, 0, 0])
     newNoteSD = rng.choice(["1", "2", "3", "4", "5", "6", "7", "8"],
@@ -181,11 +181,7 @@ def generateSightSingingScore():
     print("Scale pitch names", scalePitchNames)
 
     # Time signature selection
-    randomFloat = random.random()
-    if randomFloat < 0.5:
-        timeSig = "4/4"
-    else:
-        timeSig = "6/8"
+    timeSig = random.choice(["4/4", "6/8"])
     print("Time signature:", timeSig)
 
     # Score initialization
