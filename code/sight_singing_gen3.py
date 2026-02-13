@@ -233,7 +233,7 @@ def generateSightSingingScore():
     # end a half cadence with the note.
     if m2Rhythm[-1] > 0.5:
         halfCadentialPointIndex = len(m2Rhythm) - 1
-    # If the last note in the measure has a short duration (=0.5) and
+    # If the last note in the measure has a short duration (<=0.5) and
     # the second note from the end of the measure has a long duration (>0.5),
     # end a half cadence with the second note from the end.
     elif m2Rhythm[-2] > 0.5:
@@ -270,8 +270,12 @@ def generateSightSingingScore():
         
     # MEASURE 3
     for index, noteDuration in enumerate(m3Rhythm):
+        # If the last note in measure 2 is scale degree 5
+        # the first note should be scale degree 5, 6, 7, or 8.
         if index == 0 and note2NoteSD(m2.notes.last(), scalePitchNames) == 5:
                 newNoteSD = random.choice([5, 6, 7, 8])
+        # If the last note in measure 2 is scale degree 2
+        # the first note shoujld be scale degree 3 or 4. 
         elif index == 0 and note2NoteSD(m2.notes.last(), scalePitchNames) == 2:
                 newNoteSD = random.choice([3, 4])
         else:
