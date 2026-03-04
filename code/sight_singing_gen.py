@@ -243,7 +243,7 @@ def generateSightSingingScore():
     if m2Rhythm[-1] > 0.5:
         halfCadentialPointIndex = len(m2Rhythm) - 1
     # If the last note in the measure has a short duration (<=0.5) and
-    # the second note from the end of the measure has a long duration (>0.5),
+    # the second-to-last note has a long duration (>0.5),
     # end a half cadence with the second note from the end.
     elif m2Rhythm[-2] > 0.5:
         halfCadentialPointIndex = len(m2Rhythm) - 2
@@ -322,7 +322,7 @@ def generateSightSingingScore():
                 newNote.octave = 4
             newNote.quarterLength = noteDuration
         else:
-            # if the second note from the end of the measure
+            # if the second-to-last note
             if index == len(m4Rhythm) - 2:
                 prevNoteSD = note2NoteSD(prevNote, scalePitchNames)
                 if prevNoteSD == 4:
